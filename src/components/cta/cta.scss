@@ -1,0 +1,21 @@
+.cta{
+    background: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &__content{
+        padding: 1rem;
+    }
+
+    &__link-wrapper{
+        display: flex;
+        gap: 1rem;
+    }
+
+    &__link{
+        text-decoration: none;
+        color: inherit;
+    }
+}
