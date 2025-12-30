@@ -1,0 +1,27 @@
+.profile-input{
+
+    &__label{
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    &__input{
+        font-size: 1rem;
+        text-transform: capitalize;
+        border: 1px solid transparent;
+        flex: 1;
+        padding: 0.2rem 0.5rem;
+
+        &--active{
+            border: 1px solid;
+            outline: none;
+            
+        }
+    }
+
+    &__button{
+        background: none;
+        border: none;
+    }
+}

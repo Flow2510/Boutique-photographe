@@ -1,0 +1,45 @@
+.header{
+
+    &__wrapper{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+    }
+
+    &__logo{
+        text-decoration: none;
+        color: inherit;
+    }
+
+    &__nav{
+        display: none;
+    }
+
+    &__menu{
+        display: flex;
+        gap: 1rem;
+
+        &-icon{
+            display: flex;
+            align-items: center;
+            color: inherit;
+        }
+    }
+
+    &__mobile{
+
+        &-nav{
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem;
+            background: black;
+            color: white;
+        }
+
+        &-link{
+            color: inherit;
+            text-decoration: none;
+        }
+    }
+}
