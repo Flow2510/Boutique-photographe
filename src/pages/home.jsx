@@ -1,8 +1,9 @@
 import Cta from "../components/cta/cta";
 import Hero from "../components/hero/hero";
 import Intro from "../components/intro/intro";
+import Latest from "../components/latest/latest";
 
-export default function Home(){
+export default function Home({ items }){
     return(
         <main>
             <Hero />
@@ -14,6 +15,9 @@ export default function Home(){
                 linkText={'La boutique'}
                 linkTo2={'/about'}
                 linkText2={'A propos'}
+            />
+            <Latest 
+                items={items}
             />
         </main>
     )

@@ -67,7 +67,7 @@ function App() {
     <>
       <Header session={session}/>
       <Routes>
-        <Route path='/' element={<Home />} />
+        <Route path='/' element={<Home items={items}/>} />
         <Route path='/shop' element={<ShopPage items={items} />} />
         <Route path='/about' element={<About />} />
         <Route path='/events' element={<Events />} />

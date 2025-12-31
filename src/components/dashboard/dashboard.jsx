@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './dashboard.scss';
 import { supabase } from '../../lib/supabase';
 
-export default function Dashboard({user}) {
+export default function Dashboard({ user }) {
     const [isOpen, setIsOpen] = useState(false);
     const [name, setName] = useState('');
     const [nameError, setNameError] = useState(false);
@@ -12,8 +12,12 @@ export default function Dashboard({user}) {
     const [fileError, setFileError] = useState();
     const [price, setPrice] = useState();
     const [priceError, setPriceError] = useState(false);
-    const [quantity, setQuantity] = useState();
-    const [quantityError, setQuantityError] = useState(false);
+    const [quantitySmall, setQuantitySmall] = useState();
+    const [quantitySmallError, setQuantitySmallError] = useState(false);
+    const [quantityMedium, setQuantityMedium] = useState();
+    const [quantityMediumError, setQuantityMediumError] = useState(false);
+    const [quantityLarge, setQuantityLarge] = useState();
+    const [quantityLargeError, setQuantityLargeError] = useState(false);
 
     if (!user) {
         return <p>Chargement...</p>;
@@ -43,9 +47,11 @@ export default function Dashboard({user}) {
         setNameError(!name);
         setDescriptionError(!description);
         setPriceError(!price);
-        setQuantityError(!quantity);
+        setQuantitySmallError(!quantitySmall);
+        setQuantityMediumError(!quantityMedium);
+        setQuantityLargeError(!quantityLarge);
 
-        if (!file || !name || !description || !price || !quantity) return;
+        if (!file || !name || !description || !price || !quantitySmall || !quantityMedium || !quantityLarge) return;
 
         let imageUrl = null;
 
@@ -58,19 +64,21 @@ export default function Dashboard({user}) {
                 name,
                 description,
                 price: Number(price),
-                quantity: Number(quantity),
+                quantity_small: Number(quantitySmall),
+                quantity_medium: Number(quantityMedium),
+                quantity_large: Number(quantityLarge),
                 image: imageUrl,
             });
 
             if (error) throw error;
 
             alert("Item ajouté à la boutique");
-
-            // reset des champs
             setName("");
             setDescription("");
             setPrice("");
-            setQuantity("");
+            setQuantitySmall("");
+            setQuantityMedium("");
+            setQuantityLarge("");
             setFile(null);
             setIsOpen(prev => !prev)
 
@@ -81,61 +89,74 @@ export default function Dashboard({user}) {
 
     return(
         <section className="dashboard">
-                    <p>Admin</p>
-                    <button onClick={() => setIsOpen(prev => !prev)}>
-                        Ajouter un item en boutique
-                    </button>
-                    {isOpen && 
-                        <div className="add-item-modale">
-                            <form action="" onSubmit={handleAddItemSubmit}>
-                                <p>Ajouter un item dans la boutique</p>
-                                <label htmlFor="">
-                                    <p>Image:</p>
-                                    <input type="file" onChange={e => setFile(e.target.files[0])}/>
-                                    <p><i>Taille d'image conseillé 1200*800</i></p>
-                                    {fileError &&
-                                        <p>Veuillez mettre une image!</p>
-                                    }
-                                </label>
-                                <label htmlFor="">
-                                    <p>Nom:</p>
-                                    <input type="text" onChange={(e) => setName(e.target.value)}/>
-                                    {nameError &&
-                                        <p>Veuillez mettre un nom!</p>
-                                    }
-                                </label>
-                                <label htmlFor="">
-                                    <p>Description:</p>
-                                    <input type="text" onChange={(e) => setDescription(e.target.value)}/>
-                                    {descriptionError &&
-                                        <p>Veuillez mettre une description!</p>
-                                    }
-                                </label>
-                                <label htmlFor="">
-                                    <p>Quantité:</p>
-                                    <input type="number" onChange={(e) => setQuantity(e.target.value)}/>
-                                    {quantityError &&
-                                        <p>Veuillez mettre une quantité!</p>
-                                    }
-                                </label>
-                                <label htmlFor="">
-                                    <p>Prix:</p>
-                                    <input type="number" onChange={(e) => setPrice(e.target.value)}/>
-                                    {priceError &&
-                                        <p>Veuillez mettre un prix!</p>
-                                    }
-                                </label>
-                                <div>
-                                    <button>
-                                        Ajoutez à la boutique
-                                    </button>
-                                    <button type='button' onClick={(e) => setIsOpen(e.target.value)}>
-                                        Annuler
-                                    </button>
-                                </div>
-                            </form>
+            <p>Admin</p>
+            <button onClick={() => setIsOpen(prev => !prev)}>
+                Ajouter un item en boutique
+            </button>
+            {isOpen && 
+                <div className="add-item-modale">
+                    <form action="" onSubmit={handleAddItemSubmit}>
+                        <p>Ajouter un item dans la boutique</p>
+                        <label htmlFor="">
+                            <p>Image:</p>
+                            <input type="file" onChange={e => setFile(e.target.files[0])}/>
+                            {fileError &&
+                                <p>Veuillez mettre une image!</p>
+                            }
+                        </label>
+                        <label htmlFor="">
+                            <p>Nom:</p>
+                            <input type="text" onChange={(e) => setName(e.target.value)}/>
+                            {nameError &&
+                                <p>Veuillez mettre un nom!</p>
+                            }
+                        </label>
+                        <label htmlFor="">
+                            <p>Description:</p>
+                            <input type="text" onChange={(e) => setDescription(e.target.value)}/>
+                            {descriptionError &&
+                                <p>Veuillez mettre une description!</p>
+                            }
+                        </label>
+                        <label htmlFor="">
+                            <p>Quantité S:</p>
+                            <input type="number" onChange={(e) => setQuantitySmall(e.target.value)}/>
+                            {quantitySmallError &&
+                                <p>Veuillez mettre une quantité!</p>
+                            }
+                        </label>
+                        <label htmlFor="">
+                            <p>Quantité M:</p>
+                            <input type="number" onChange={(e) => setQuantityMedium(e.target.value)}/>
+                            {quantityMediumError &&
+                                <p>Veuillez mettre une quantité!</p>
+                            }
+                        </label>
+                        <label htmlFor="">
+                            <p>Quantité L:</p>
+                            <input type="number" onChange={(e) => setQuantityLarge(e.target.value)}/>
+                            {quantityLargeError &&
+                                <p>Veuillez mettre une quantité!</p>
+                            }
+                        </label>
+                        <label htmlFor="">
+                            <p>Prix:</p>
+                            <input type="number" onChange={(e) => setPrice(e.target.value)}/>
+                            {priceError &&
+                                <p>Veuillez mettre un prix!</p>
+                            }
+                        </label>
+                        <div>
+                            <button>
+                                Ajoutez à la boutique
+                            </button>
+                            <button type='button' onClick={(e) => setIsOpen(e.target.value)}>
+                                Annuler
+                            </button>
                         </div>
-                    }
-                </section>
+                    </form>
+                </div>
+            }
+        </section>
     )
 }
