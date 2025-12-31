@@ -2,7 +2,6 @@ import { Route, Routes } from 'react-router-dom'
 import './App.scss'
 import Header from './components/header/header'
 import Home from './pages/home'
-import Shop from './pages/shop'
 import Events from './pages/events'
 import About from './pages/about'
 import Contact from './pages/contact'
@@ -13,10 +12,21 @@ import { useEffect, useState } from 'react'
 import { supabase } from './lib/supabase'
 import Profile from './pages/profile'
 import Admin from './pages/admin'
+import ShopPage from './pages/shoppage'
 
 function App() {
   const [session, setSession] = useState(null);
   const [user, setUser] = useState(null);
+  const [items, setItems] = useState([]);
+
+  async function getItems(){
+    const {data, error} = await supabase.from('items').select();
+    if (error) {
+      console.error("Erreur récupération items:", error.message);
+    } else {
+      setItems(data);
+    }
+  }
   
   useEffect(() => {
     async function fetchData() {
@@ -27,12 +37,13 @@ function App() {
         setSession(data.session)
       }
     }
+    getItems();
     fetchData();
   }, [])
 
   useEffect(() => {
-    console.log(user)
-  }, [user])
+    console.log(items)
+  }, [items])
 
   useEffect(() => {
     async function fetchUser() {
@@ -57,7 +68,7 @@ function App() {
       <Header session={session}/>
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/shop' element={<Shop />} />
+        <Route path='/shop' element={<ShopPage items={items} />} />
         <Route path='/about' element={<About />} />
         <Route path='/events' element={<Events />} />
         <Route path='/contact' element={<Contact user={user} session={session}/>} />

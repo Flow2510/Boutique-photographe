@@ -6,7 +6,7 @@ export default function Hero() {
         <section className='hero'>
             <div className='hero__content'>
                 <h2 className='hero__content-title'>Title</h2>
-                <NavLink className='hero__content-link'>Boutique</NavLink>
+                <NavLink to={'/shop'} className='hero__content-link'>Boutique</NavLink>
             </div>
         </section>
     )
