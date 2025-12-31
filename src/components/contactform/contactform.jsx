@@ -21,29 +21,29 @@ export default function ContactForm() {
 
     return(
         <form className='contact-form' action="" onSubmit={handleSendMessageSubmit}>
-            <h2>Contact</h2>
-            <label htmlFor="">
-                <p>Nom:</p>
-                <input type="text" onChange={(e) => setName(e.target.value)}/>
+            <h2 className='contact-form__title'>Contact</h2>
+            <label className='contact-form__label' htmlFor="">
+                <p className='contact-form__label-title'>Nom:</p>
+                <input className={`contact-form__label-input${nameError? " contact-form__label-input--error" : ""}`} type="text" onChange={(e) => setName(e.target.value)}/>
                 {nameError && 
-                    <p>Veuillez mettre un nom</p>
+                    <p className='contact-form__label-error'>Veuillez mettre un nom</p>
                 }
             </label>
-            <label htmlFor="">
-                <p>Email:</p>
-                <input type="email" onChange={(e) => setEmail(e.target.value)}/>
+            <label className='contact-form__label' htmlFor="">
+                <p className='contact-form__label-title'>Email:</p>
+                <input className={`contact-form__label-input${emailError? " contact-form__label-input--error" : ""}`} type="email" onChange={(e) => setEmail(e.target.value)}/>
                 {emailError && 
-                    <p>Veuillez mettre un email</p>
+                    <p className='contact-form__label-error'>Veuillez mettre un email</p>
                 }
             </label>
-            <label htmlFor="">
-                <p>Message:</p>
-                <textarea name="" id="" onChange={(e) => setMessage(e.target.value)}></textarea>
+            <label className='contact-form__label' htmlFor="">
+                <p className='contact-form__label-title'>Message:</p>
+                <textarea className={`contact-form__label-textarea${messageError? " contact-form__label-textarea--error" : ""}`} name="" id="" onChange={(e) => setMessage(e.target.value)}></textarea>
                 {messageError && 
-                    <p>Veuillez mettre un message</p>
+                    <p className='contact-form__label-error'>Veuillez mettre un message</p>
                 }
             </label>
-            <button type='submit'>
+            <button className='contact-form__button' type='submit'>
                 Envoyer
             </button>
         </form>
