@@ -5,7 +5,6 @@ import Home from './pages/home'
 import Events from './pages/events'
 import About from './pages/about'
 import Contact from './pages/contact'
-import Cart from './pages/cart'
 import Footer from './components/footer/footer'
 import Login from './pages/login'
 import { useEffect, useState } from 'react'
@@ -13,14 +12,18 @@ import { supabase } from './lib/supabase'
 import Profile from './pages/profile'
 import Admin from './pages/admin'
 import ShopPage from './pages/shoppage'
+import ItemPage from './pages/itempage'
+import CartPage from './pages/cartpage'
 
 function App() {
   const [session, setSession] = useState(null);
   const [user, setUser] = useState(null);
   const [items, setItems] = useState([]);
+  const [cart, setCart] = useState([]);
 
   async function getItems(){
-    const {data, error} = await supabase.from('items').select();
+    const {data, error} = await supabase.from('items').select(`*, item_sizes(*)`);
+
     if (error) {
       console.error("Erreur récupération items:", error.message);
     } else {
@@ -42,8 +45,9 @@ function App() {
   }, [])
 
   useEffect(() => {
-    console.log(items)
-  }, [items])
+    console.log(cart)
+    // enregistrer pour sauvegarder le panier dans locale storage
+  }, [cart])
 
   useEffect(() => {
     async function fetchUser() {
@@ -72,10 +76,11 @@ function App() {
         <Route path='/about' element={<About />} />
         <Route path='/events' element={<Events />} />
         <Route path='/contact' element={<Contact user={user} session={session}/>} />
-        <Route path='/cart' element={<Cart />} />
+        <Route path='/cart' element={<CartPage cart={cart} />} />
         <Route path='/profile' element={<Profile user={user}/>} />
         <Route path='/login' element={<Login />} />
         <Route path='/admin' element={<Admin user={user} />} />
+        <Route path='/:id' element={<ItemPage setCart={setCart} items={items} />} />
       </Routes>
       <Footer />
     </>

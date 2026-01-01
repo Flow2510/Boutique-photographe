@@ -12,7 +12,7 @@ export default function Shop({ items }) {
             </div>
             <div className='shop__gallery'>
                 {items.map((item, index) => (
-                    <NavLink className='shop__gallery-link' key={item.id + index}><img className='shop__gallery-image' src={item.image} alt="" /></NavLink>
+                    <NavLink to={`/${item.name}`} className='shop__gallery-link' key={item.id + index}><img className='shop__gallery-image' src={item.image} alt="" /></NavLink>
                 ))}
             </div>
         </section>

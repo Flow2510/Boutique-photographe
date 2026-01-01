@@ -124,14 +124,14 @@ export default function LoginForm(){
                     </label>
                     <div>
                         <button 
-                            className="login-form__button"
+                            className="login-form__link"
                             type="button"
                             onClick={handleRegisterClick}
                         >
                             Pas encore de compte ?
                         </button>
                         <button
-                            className="login-form__button"
+                            className="login-form__link"
                             type="button"
                             onClick={handleResetClick}
                         >
@@ -161,7 +161,7 @@ export default function LoginForm(){
                     </label>
                     <div>
                         <button 
-                            className="login-form__button"
+                            className="login-form__"
                             type="button"
                             onClick={handleRegisterClick}
                         >

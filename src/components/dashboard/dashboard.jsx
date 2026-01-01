@@ -58,19 +58,28 @@ export default function Dashboard({ user }) {
         try {
             imageUrl = await uploadImage(file);
 
-            const { error } = await supabase
-            .from("items")
-            .insert({
-                name,
-                description,
-                price: Number(price),
-                quantity_small: Number(quantitySmall),
-                quantity_medium: Number(quantityMedium),
-                quantity_large: Number(quantityLarge),
-                image: imageUrl,
-            });
+            const { data: item, error: itemError } = await supabase
+                .from("items")
+                .insert({
+                    name,
+                    description,
+                    image: imageUrl,
+                })
+                .select()
+                .single();
 
-            if (error) throw error;
+                if (itemError) throw itemError;
+
+                const { error: sizesError } = await supabase
+                .from("item_sizes")
+                .insert([
+                    { item_id: item.id, size: 'S', price, quantity: quantitySmall },
+                    { item_id: item.id, size: 'M', price: price + 25, quantity: quantityMedium },
+                    { item_id: item.id, size: 'L', price: price + 50, quantity: quantityLarge },
+                ])
+            ;
+
+            if (sizesError) throw sizesError;
 
             alert("Item ajouté à la boutique");
             setName("");
@@ -141,7 +150,7 @@ export default function Dashboard({ user }) {
                         </label>
                         <label htmlFor="">
                             <p>Prix:</p>
-                            <input type="number" onChange={(e) => setPrice(e.target.value)}/>
+                            <input type="number" onChange={(e) => setPrice(Number(e.target.value))}/>
                             {priceError &&
                                 <p>Veuillez mettre un prix!</p>
                             }
