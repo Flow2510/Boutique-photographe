@@ -1,7 +1,12 @@
 import './cart.scss';
 
-export default function Cart({ cart }) {
-    if (cart.length === 0) return <p>Panier vide</p>
+export default function Cart({ cart, setCart }) {
+    if (cart.length === 0) return <main>
+        <section className='cart'>
+            <h2>Panier</h2>
+            <p>Votre panier est vide</p>
+        </section>
+    </main>
 
     const totalQuantity = cart.reduce((acc, item) => acc + item.quantity, 0);
     const totalItems = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
@@ -14,13 +19,14 @@ export default function Cart({ cart }) {
 
     return(
         <section className='cart'>
+            <h2>Panier</h2>
             <div className='cart__wrapper'>
                 <table>
                     <thead>
                         <tr>
                             <td>Produit</td>
-                            <td>Quantité</td>
                             <td>Prix</td>
+                            <td>Quantité</td>
                             <td>Prix</td>
                         </tr>
                     </thead>
@@ -50,8 +56,8 @@ export default function Cart({ cart }) {
                         </tr>
                     </tfoot>
                 </table>
-                <button>
-                    
+                <button onClick={() => setCart([])}>
+                    Vider le panier
                 </button>
             </div>
         </section>

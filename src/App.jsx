@@ -19,7 +19,10 @@ function App() {
   const [session, setSession] = useState(null);
   const [user, setUser] = useState(null);
   const [items, setItems] = useState([]);
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(() => {
+    const storedCart = localStorage.getItem("cart");
+    return storedCart ? JSON.parse(storedCart) : [];
+  });
 
   async function getItems(){
     const {data, error} = await supabase.from('items').select(`*, item_sizes(*)`);
@@ -45,8 +48,8 @@ function App() {
   }, [])
 
   useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
     console.log(cart)
-    // enregistrer pour sauvegarder le panier dans locale storage
   }, [cart])
 
   useEffect(() => {
@@ -69,17 +72,17 @@ function App() {
 
   return (
     <>
-      <Header session={session}/>
+      <Header session={session} cart={cart}/>
       <Routes>
         <Route path='/' element={<Home items={items}/>} />
         <Route path='/shop' element={<ShopPage items={items} />} />
         <Route path='/about' element={<About />} />
         <Route path='/events' element={<Events />} />
         <Route path='/contact' element={<Contact user={user} session={session}/>} />
-        <Route path='/cart' element={<CartPage cart={cart} />} />
+        <Route path='/cart' element={<CartPage cart={cart} setCart={setCart} />} />
         <Route path='/profile' element={<Profile user={user}/>} />
         <Route path='/login' element={<Login />} />
-        <Route path='/admin' element={<Admin user={user} />} />
+        <Route path='/admin' element={<Admin items={items} user={user} />} />
         <Route path='/:id' element={<ItemPage setCart={setCart} items={items} />} />
       </Routes>
       <Footer />

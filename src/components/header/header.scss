@@ -6,6 +6,9 @@
         justify-content: space-between;
         align-items: center;
         padding: 1rem;
+        position: relative;
+        z-index: 50;
+        background: white;
     }
 
     &__logo{
@@ -17,6 +20,29 @@
         display: none;
     }
 
+    &__cart{
+        color: inherit;
+        text-decoration: none;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &-span{
+            position: absolute;
+            font-size: 0.7rem;
+            color: white;
+            background: black;
+            border-radius: 9999px;
+            bottom: -0.4rem;
+            left: -0.4rem;
+            width: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
     &__menu{
         display: flex;
         gap: 1rem;
@@ -26,6 +52,15 @@
             align-items: center;
             color: inherit;
         }
+
+        &-button{
+            background: none;
+            border: none;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            padding: 0;
+        }
     }
 
     &__mobile{
@@ -33,19 +68,28 @@
         &-nav{
             width: 100%;
             position: absolute;
-            top: 69px;
+            top: -10rem;
             left: 0;
             display: flex;
+            flex-direction: column;
+            align-items: center;
             justify-content: space-between;
             padding: 0.5rem;
             background: black;
             color: white;
             z-index: 10;
+            transition: top 0.5s ease-in-out;
+
+            &--open{
+                top: 70px;
+                transition: top 0.5s ease-in-out;
+            }
         }
 
         &-link{
             color: inherit;
             text-decoration: none;
+            padding: 0.5rem;
         }
     }
 }

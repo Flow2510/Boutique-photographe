@@ -1,6 +1,6 @@
 import Dashboard from "../components/dashboard/dashboard";
 
-export default function Admin({user}){
+export default function Admin({user, items}){
     if (!user) {
         return <p>Chargement...</p>;
     }
@@ -8,7 +8,7 @@ export default function Admin({user}){
     return(
         <main>
             {user.role === "admin" && 
-                <Dashboard user={user} />
+                <Dashboard items={items} user={user} />
             }
             {user.role !== "admin" && 
                 <p>Vous n'avez pas les droits pour accedez au menu</p>
