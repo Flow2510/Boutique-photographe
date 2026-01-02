@@ -15,6 +15,10 @@ export default function Cart({ cart, setCart }) {
         return 12.99
     }
 
+    const handleRemoveClick = (e) => {
+        setCart(cart.filter(item => item.itemID === e))
+    }
+
     const shipping = delivery();
 
     return(
@@ -37,6 +41,7 @@ export default function Cart({ cart, setCart }) {
                                 <td>{item.price}</td>
                                 <td>{item.quantity}</td>
                                 <td>{item.price * item.quantity}</td>
+                                <td><button value={item.itemId} onClick={handleRemoveClick}>X</button></td>
                             </tr>
                         ))}
                         <tr>

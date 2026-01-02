@@ -21,7 +21,11 @@ export default function Dashboard({ user, items }) {
     const [quantityLargeError, setQuantityLargeError] = useState(false);
 
     if (!user || !items) {
-        return <p>Chargement...</p>;
+        return <main>
+            <section className='dashboard'>
+                <p>Chargement...</p>;
+            </section>
+        </main>
     }
 
     if (user.role !== 'admin') return <p>Vous n'avez pas les droits</p>
