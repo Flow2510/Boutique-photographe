@@ -80,7 +80,7 @@ function App() {
         <Route path='/events' element={<Events />} />
         <Route path='/contact' element={<Contact user={user} session={session}/>} />
         <Route path='/cart' element={<CartPage cart={cart} setCart={setCart} />} />
-        <Route path='/profile' element={<Profile user={user}/>} />
+        <Route path='/profile' element={<Profile user={user} setSession={setSession}/>} />
         <Route path='/login' element={<Login />} />
         <Route path='/admin' element={<Admin items={items} user={user} />} />
         <Route path='/:id' element={<ItemPage setCart={setCart} items={items} />} />

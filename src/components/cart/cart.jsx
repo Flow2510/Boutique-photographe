@@ -41,7 +41,7 @@ export default function Cart({ cart, setCart }) {
                                 <td>{item.price}</td>
                                 <td>{item.quantity}</td>
                                 <td>{item.price * item.quantity}</td>
-                                <td><button value={item.itemId} onClick={handleRemoveClick}>X</button></td>
+                                <td><button value={item.itemId} onClick={handleRemoveClick}><i className="fa-solid fa-xmark"></i></button></td>
                             </tr>
                         ))}
                         <tr>

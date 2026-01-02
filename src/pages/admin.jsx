@@ -1,8 +1,9 @@
 import Dashboard from "../components/dashboard/dashboard";
+import Loading from "../components/loading/loading";
 
 export default function Admin({user, items}){
     if (!user) {
-        return <p>Chargement...</p>;
+        return <Loading />
     }
 
     return(

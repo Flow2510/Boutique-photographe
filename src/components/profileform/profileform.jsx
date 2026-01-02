@@ -2,12 +2,19 @@ import { useState } from 'react';
 import ProfileInput from '../profileinput/profileinput';
 import './profileform.scss';
 import { NavLink } from 'react-router-dom';
+import { supabase } from '../../lib/supabase';
 
-export default function ProfileForm({ user }) {
+export default function ProfileForm({ user, setSession }) {
     const [isOpen, setIsOpen] = useState(false);
-    
+
     const handleDeleteAccountClick = (e) => {
         e.preventDefault();
+        
+    }
+
+    const handleLogOutClick = async () => {
+        await supabase.auth.signOut();
+        setSession(null);
     }
 
     if (!user) return null;
@@ -15,6 +22,7 @@ export default function ProfileForm({ user }) {
     return(
         <section>
             <div className='profile-form'>
+                <button className='profile-form__unconnect' onClick={handleLogOutClick}>Se déconnecter</button>
                 <h3>
                     Profil:
                 </h3>

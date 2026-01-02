@@ -1,8 +1,9 @@
 import { NavLink } from 'react-router-dom';
 import './latest.scss';
+import Loading from '../loading/loading';
 
 export default function Latest({ items }){
-    if (!items) return <p>Chargement...</p>
+    if (!items) return <Loading />
 
     const sortedItems = [...items].sort(
         (a, b) => new Date(b.created_at) - new Date(a.created_at)

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './item.scss';
+import Loading from '../loading/loading';
 
 export default function Item({ selectedItem, setCart }) {
     const [selectedSizeValue, setSelectedSizeValue] = useState(null);
@@ -22,10 +23,10 @@ export default function Item({ selectedItem, setCart }) {
         ])
     }
 
-    if (!selectedItem || !selectedSize) return <p>Chargement...</p>;
+    if (!selectedItem || !selectedSize) return <Loading />;
 
     return(
-        <section className='item'>
+            <section className='item'>
             <img className='item__image' src={selectedItem.image} alt={selectedItem.description} />
             <div className='item__content'>
                 <h2 className='item__content-title'>{selectedItem.name}</h2>

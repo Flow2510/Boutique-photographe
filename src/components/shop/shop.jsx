@@ -1,8 +1,9 @@
 import { NavLink } from 'react-router-dom';
 import './shop.scss';
+import Loading from '../loading/loading';
 
 export default function Shop({ items }) {
-    if (!items) return <p>Chargement...</p>
+    if (!items) return <Loading />
 
     return(
         <section className='shop'>
