@@ -33,6 +33,10 @@ function App() {
       setItems(data);
     }
   }
+
+  useEffect(() => {
+    getItems();
+  }, [])
   
   useEffect(() => {
     async function fetchData() {
@@ -43,13 +47,11 @@ function App() {
         setSession(data.session)
       }
     }
-    getItems();
     fetchData();
   }, [])
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
-    console.log(cart)
   }, [cart])
 
   useEffect(() => {
