@@ -2,10 +2,12 @@ import { useState } from 'react';
 import './dashboard.scss';
 import { supabase } from '../../lib/supabase';
 import AddModal from '../addmodal/addmodal';
-import { uploadImage } from '../../function/function';
+import { deleteItem, uploadImage } from '../../function/function';
+import Loading from '../loading/loading';
 
 export default function Dashboard({ user, items }) {
     const [addModalIsOpen, setAddModalIsOpen] = useState(false);
+    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
     const [name, setName] = useState('');
     const [nameError, setNameError] = useState(false);
     const [description, setDescription] = useState('');
@@ -20,13 +22,10 @@ export default function Dashboard({ user, items }) {
     const [quantityMediumError, setQuantityMediumError] = useState(false);
     const [quantityLarge, setQuantityLarge] = useState();
     const [quantityLargeError, setQuantityLargeError] = useState(false);
+    const [deleteId, setDeleteId] = useState("");
 
     if (!user || !items) {
-        return <main>
-            <section className='dashboard'>
-                <p>Chargement...</p>;
-            </section>
-        </main>
+        return <Loading />
     }
 
     if (user.role !== 'admin') return <p>Vous n'avez pas les droits</p>
@@ -87,6 +86,11 @@ export default function Dashboard({ user, items }) {
         }
     };
 
+    const handleDeleteItem = () => {
+        deleteItem(deleteId);
+        setDeleteModalIsOpen(prev => !prev)
+    };
+
     return(
         <section className="dashboard">
             <p>Admin</p>
@@ -99,7 +103,7 @@ export default function Dashboard({ user, items }) {
                         </div>
                         <div className='dashboard__edit'>
                             <button className='dashboard__edit-button'><i className="fa-solid fa-pen-to-square"></i></button>
-                            <button value={item.id} onClick={() => console.log} className='dashboard__edit-button'><i className="fa-solid fa-xmark"></i></button>
+                            <button onClick={() => {setDeleteId(item.id); setDeleteModalIsOpen(prev => !prev)}} className='dashboard__edit-button'><i className="fa-solid fa-xmark"></i></button>
                         </div>
                     </div>
                 ))}
@@ -107,6 +111,17 @@ export default function Dashboard({ user, items }) {
             <button className='dashboard__button' onClick={() => setAddModalIsOpen(prev => !prev)}>
                 Ajouter un item en boutique
             </button>
+            {deleteModalIsOpen &&
+                <div className='delete-modal'>
+                    <div className='delete-modal__wrapper'>
+                        <p className='delete-modal__text'>Supprimer de la boutique ?</p>
+                        <div className='delete-modal__button-wrapper'>
+                            <button className='delete-modal__button' onClick={handleDeleteItem}>Supprimer</button>
+                            <button className='delete-modal__button' onClick={() => setDeleteModalIsOpen(prev => !prev)}>Annuler</button>
+                        </div>
+                    </div>
+                </div>
+            }
             {addModalIsOpen && 
                 <AddModal
                     handleAddItemSubmit={handleAddItemSubmit}

@@ -14,6 +14,7 @@ import Admin from './pages/admin'
 import ShopPage from './pages/shoppage'
 import ItemPage from './pages/itempage'
 import CartPage from './pages/cartpage'
+import { getItems } from './function/function'
 
 function App() {
   const [session, setSession] = useState(null);
@@ -24,19 +25,18 @@ function App() {
     return storedCart ? JSON.parse(storedCart) : [];
   });
 
-  async function getItems(){
-    const {data, error} = await supabase.from('items').select(`*, item_sizes(*)`);
-
-    if (error) {
-      console.error("Erreur récupération items:", error.message);
-    } else {
-      setItems(data);
+  async function fetchItems() {
+      try {
+        const data = await getItems();
+        setItems(data);
+      } catch (err) {
+        console.error("Erreur lors de la récupération des items:", err);
+      }
     }
-  }
 
   useEffect(() => {
-    getItems();
-  }, [])
+    fetchItems();
+  }, []);
   
   useEffect(() => {
     async function fetchData() {
@@ -84,7 +84,7 @@ function App() {
         <Route path='/cart' element={<CartPage cart={cart} setCart={setCart} />} />
         <Route path='/profile' element={<Profile user={user} setSession={setSession}/>} />
         <Route path='/login' element={<Login />} />
-        <Route path='/admin' element={<Admin items={items} user={user} />} />
+        <Route path='/admin' element={<Admin items={items} user={user}/>} />
         <Route path='/:id' element={<ItemPage setCart={setCart} items={items} />} />
       </Routes>
       <Footer />

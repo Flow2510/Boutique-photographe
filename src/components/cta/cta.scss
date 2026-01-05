@@ -1,5 +1,5 @@
 .cta{
-    background: #000103;
+    background: #333138;
     color: white;
     display: flex;
     justify-content: center;
@@ -25,5 +25,10 @@
         display: block;
         border: 1px solid;
         padding: 0.5rem 0.8rem;
+
+        &:hover{
+            background: white;
+            color: #000103;
+        }
     }
 }

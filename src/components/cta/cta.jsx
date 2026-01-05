@@ -5,8 +5,12 @@ export default function Cta({title, text, linkTo, linkText, linkTo2, linkText2})
     return(
         <section className='cta'>
             <div className='cta__content'>
-                <h3 className='cta__content-title'>{title}</h3>
-                <p className='cta__content-text'>{text}</p>
+                {title &&
+                    <h3 className='cta__content-title'>{title}</h3>
+                }
+                {text &&
+                    <p className='cta__content-text'>{text}</p>
+                }
                 <div className='cta__link-wrapper'>
                     {linkTo && 
                         <NavLink className='cta__link' to={linkTo}>{linkText}</NavLink>

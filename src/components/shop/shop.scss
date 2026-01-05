@@ -4,6 +4,28 @@
     flex-direction: column;
     gap: 1rem;
 
+    &__wrapper{
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 2rem;
+
+        @media screen and (min-width:768px) {
+            flex-direction: row;
+        }
+    }
+
+    &__select{
+        display: flex;
+        justify-content: space-between;
+
+        select{
+            width: fit-content;
+            padding: 0.2rem;
+            outline: none;
+            cursor: pointer;
+        }
+    }
+
     &__index{
         display: flex;
         justify-content: center;
@@ -16,10 +38,25 @@
         }
     }
 
+    &__gallery-wrapper{
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
     &__gallery{
         display: flex;
         flex-direction: column;
         gap: 1rem;
+        
+        @media screen and (min-width:768px) {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media screen and (min-width:1000px) {
+            grid-template-columns: repeat(3, 1fr);
+        }
 
         &-image{
             width: 100%;

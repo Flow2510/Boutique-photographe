@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './item.scss';
 import Loading from '../loading/loading';
+import { NavLink } from 'react-router-dom';
 
 export default function Item({ selectedItem, setCart }) {
     const [selectedSizeValue, setSelectedSizeValue] = useState(null);
@@ -27,6 +28,7 @@ export default function Item({ selectedItem, setCart }) {
 
     return(
             <section className='item'>
+            <NavLink to={'/shop'} className="item__return"><i className="fa-solid fa-arrow-left"></i></NavLink>
             <img className='item__image' src={selectedItem.image} alt={selectedItem.description} />
             <div className='item__content'>
                 <h2 className='item__content-title'>{selectedItem.name}</h2>

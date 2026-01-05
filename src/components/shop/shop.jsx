@@ -54,19 +54,27 @@ export default function Shop({ items }) {
     return(
         <section className='shop'>
             <h2>La boutique</h2>
-            <div className='shop__menu'>
-                <select name="" id="" onChange={(e) => setSort(e.target.value)}>
-                    <option value="">Tri</option>
-                    <option value="name">Nom A-Z</option>
-                    <option value="reverse-name">Nom Z-A</option>
-                    <option value="date">Plus récent</option>
-                    <option value="reverse-date">Plus ancien</option>
-                </select>
-            </div>
-            <div className='shop__gallery'>
-                {sortedItems.slice(slice, slice + 3).map((item, index) => (
-                    <NavLink to={`/${item.name}`} className='shop__gallery-link' key={item.id + index}><img className='shop__gallery-image' src={item.image} alt="" /></NavLink>
-                ))}
+            <div className='shop__wrapper'>
+                <div className='shop__menu'>
+                    <p>Filtres:</p>
+                </div>
+                <div className='shop__gallery-wrapper'>
+                    <div className='shop__select'>
+                        <p>Trier par:</p>
+                        <select name="" id="" onChange={(e) => setSort(e.target.value)}>
+                            <option value="">Tri</option>
+                            <option value="name">Nom A-Z</option>
+                            <option value="reverse-name">Nom Z-A</option>
+                            <option value="date">Plus récent</option>
+                            <option value="reverse-date">Plus ancien</option>
+                        </select>
+                    </div>
+                    <div className='shop__gallery'>
+                        {sortedItems.slice(slice, slice + 3).map((item, index) => (
+                            <NavLink to={`/${item.name}`} className='shop__gallery-link' key={item.id + index}><img className='shop__gallery-image' src={item.image} alt="" /></NavLink>
+                        ))}
+                    </div>
+                </div>
             </div>
             <div className='shop__index'>
                 <button disabled={slice === 0} onClick={handleBackClick}><i className="fa-solid fa-chevron-left"></i></button>
