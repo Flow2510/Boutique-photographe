@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './dashboard.scss';
 import { supabase } from '../../lib/supabase';
 import AddModal from '../addmodal/addmodal';
+import { uploadImage } from '../../function/function';
 
 export default function Dashboard({ user, items }) {
     const [addModalIsOpen, setAddModalIsOpen] = useState(false);
@@ -29,23 +30,6 @@ export default function Dashboard({ user, items }) {
     }
 
     if (user.role !== 'admin') return <p>Vous n'avez pas les droits</p>
-
-    async function uploadImage(file) {
-        const fileExt = file.name.split('.').pop();
-        const fileName = `${crypto.randomUUID()}.${fileExt}`;
-
-        const {error} = await supabase.storage
-            .from('items-images')
-            .upload(fileName, file);
-
-        if (error) throw error;
-
-        const { data } = supabase.storage
-            .from('items-images')
-            .getPublicUrl(fileName)
-
-        return data.publicUrl;
-    }
 
     const handleAddItemSubmit = async (e) => {
         e.preventDefault();
